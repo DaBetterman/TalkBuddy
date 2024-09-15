@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}"/>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>BuddyTalk</title>
+  </head>
+  <body>
+    <div class="loader">
+      <img src="{{ url_for('static', filename='images/bubbles.gif') }}" alt="" id="loader-img">
+       <!-- <img src="/TalkBuddy_CGPT/app/static/images/bubbles.gif" alt=""> -->
+    </div>
+    <div class="sidebar">
+      <div class="top">
+          <div class="logo">
+              <img src="{{ url_for('static', filename='images/icon.ico') }}" alt="BuddyTalk-icon" class="icon">
+              <span>BuddyTalk</span>
+          </div>
+          <i class="bx bx-menu" id="btn"></i>
+      </div>
+
+      <ul>
+          <li>
+              <a href="{{ url_for('calendar') }}">
+                  <i class="bx bxs-calendar"></i>
+                  <span class="nav-item">Calendar</span>
+              </a>
+              <span class="tooltip">Calendar</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-plus-circle"></i>
+                  <span class="nav-item">Create</span>
+              </a>
+              <span class="tooltip">Create Event</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-edit"></i>
+                  <span class="nav-item">Edit</span>
+              </a>
+              <span class="tooltip">Edit Event</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-trash"></i>
+                  <span class="nav-item">Delete</span>
+              </a>
+              <span class="tooltip">Delete Event</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-user"></i>
+                  <span class="nav-item">Profile</span>
+              </a>
+              <span class="tooltip">Profile</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-cog"></i>
+                  <span class="nav-item">Settings</span>
+              </a>
+              <span class="tooltip">Settings</span>
+          </li>
+          <li>
+              <a href="#">
+                  <i class="bx bx-log-out"></i>
+                  <span class="nav-item">Logout</span>
+              </a>
+              <span class="tooltip">Logout</span>
+          </li>
+      </ul>
+    </div>
+
+    <header class="section__container header__container">
+      <div class="header__image">
+        <img src="{{ url_for('static', filename='images/calendar.gif') }}" alt="Google Calendar Assistant" />
+      </div>
+      <div class="header__content">
+        <h2>YOUR PERSONAL ASSISTANT FOR MANAGING EVENTS</h2>
+        <h1>ORGANIZE YOUR DAY WITH BUDDYTALK</h1>
+        <p>
+          Simplify your schedule and stay on top of your tasks with BuddyTalk, your virtual assistant for Google Calendar. Create, update, and manage events effortlessly, all in one place.
+        </p>
+        <div class="header__btns">
+          <a href="#">
+            <img src="{{ url_for('static', filename='images/google-play.jpg') }}" alt="google-play" />
+          </a>
+          <a href="#">
+            <img src="{{ url_for('static', filename='images/app-store.jpg') }}" alt="app-store" />
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

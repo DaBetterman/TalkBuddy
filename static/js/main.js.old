@@ -1,0 +1,214 @@
+let btn = document.querySelector('#btn');
+let sidebar = document.querySelector('.sidebar');
+
+btn.onclick = function() {
+    sidebar.classList.toggle('active');
+}
+
+// Function to fetch Google Calendar events
+function fetchEvents() {
+    fetch('/calendar/events')
+    .then(response => response.json())
+    .then(data => {
+        if (data.events) {
+            const eventsList = document.getElementsByClassName('eventsList');
+            eventsList.innerHTML = ''; // Clear the list first
+            data.events.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = event;
+                eventsList.appendChild(listItem);
+            });
+        } else if (data.error) {
+            console.error('Error fetching events:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Function to fetch Google Calendar events
+function getEvents() {
+    fetch('/calendar/public_holidays')
+    .then(response => response.json())
+    .then(data => {
+        if (data.events) {
+            const eventsList = document.getElementById('eventsList');
+            eventsList.innerHTML = ''; // Clear the list first
+            data.events.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = event;
+                eventsList.appendChild(listItem);
+            });
+        } else if (data.error) {
+            console.error('Error fetching events:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+function deleteEventbyName() {
+    fetch('/calendar/delete_event')
+    .then(response => response.json())
+    .then(data => {
+        if (data.events) {
+            const eventsList = document.getElementById('eventsList');
+            eventsList.innerHTML = ''; // Clear the list first
+            data.events.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = event;
+                eventsList.appendChild(listItem);
+            });
+        } else if (data.error) {
+            console.error('Error fetching events:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+// Function to send text to the backend
+function sendText() {
+    const text = document.getElementById('textInput').value;
+
+    fetch('/api/speak', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: text }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Speech recognition setup
+let recognition;
+if ('webkitSpeechRecognition' in window) {
+    recognition = new webkitSpeechRecognition();
+} else if ('SpeechRecognition' in window) {
+    recognition = new SpeechRecognition();
+} else {
+    alert('Speech recognition is not supported in your browser.');
+}
+
+// Speech recognition event handlers
+if (recognition) {
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+        document.getElementById('startRecognition').disabled = true;
+        document.getElementById('stopRecognition').disabled = false;
+        console.log('Speech recognition started');
+    };
+
+    recognition.onresult = (event) => {
+        const speechResult = event.results[0][0].transcript;
+        console.log('Result received: ' + speechResult);
+        document.getElementById('textInput').value = speechResult;
+        
+        if (speechResult == 'public holidays'.toLowerCase() || speechResult == 'list all public holidays'.toLowerCase() || speechResult == 'holidays'.toLowerCase()) {
+           getEvents(); 
+        }
+        else if (speechResult == 'list all'.toLowerCase()) {
+            fetchEvents();
+        }
+        else if (speechResult == 'delete event'.toLowerCase() || speechResult == 'delete an event'.toLowerCase()) {
+            deleteEventbyName();
+        }
+        else {
+            sendText();
+        } 
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+    };
+
+    recognition.onend = () => {
+        document.getElementById('startRecognition').disabled = false;
+        document.getElementById('stopRecognition').disabled = true;
+        console.log('Speech recognition ended');
+    };
+}
+
+// Start speech recognition
+function startRecognition() {
+    if (recognition) {
+        recognition.start();
+    }
+}
+
+// Stop speech recognition
+function stopRecognition() {
+    if (recognition) {
+        recognition.stop();
+    }
+}
+
+const loader = document.querySelector(".loader")
+
+window.addEventListener("load", vanish);
+
+function vanish() {
+  loader.classList.add("disappear");
+}
+
+// ======================= //
+
+const menuBtn = document.getElementById("menu-btn");
+const navLinks = document.getElementById("nav-links");
+const menuBtnIcon = menuBtn.querySelector("i");
+
+menuBtn.addEventListener("click", (e) => {
+  navLinks.classList.toggle("open");
+
+  const isOpen = navLinks.classList.contains("open");
+  menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
+});
+
+navLinks.addEventListener("click", (e) => {
+  navLinks.classList.remove("open");
+  menuBtnIcon.setAttribute("class", "ri-menu-line");
+});
+
+const scrollRevealOption = {
+  distance: "50px",
+  origin: "bottom",
+  duration: 1000,
+};
+
+ScrollReveal().reveal(".header__image img", {
+  ...scrollRevealOption,
+  origin: "right",
+});
+ScrollReveal().reveal(".header__content h2", {
+  ...scrollRevealOption,
+  delay: 500,
+});
+ScrollReveal().reveal(".header__content h1", {
+  ...scrollRevealOption,
+  delay: 1000,
+});
+ScrollReveal().reveal(".header__content p", {
+  ...scrollRevealOption,
+  delay: 1500,
+});
+ScrollReveal().reveal(".header__btns", {
+  ...scrollRevealOption,
+  delay: 2000,
+});
+
+
