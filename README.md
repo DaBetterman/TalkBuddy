@@ -7,11 +7,6 @@
 - [Technologies Used](#technologies-used)
 - [Architecture](#architecture)
 - [Installation](#installation)
-- [Usage](#usage)
-- [File Structure](#file-structure)
-- [Challenges and Future Improvements](#challenges-and-future-improvements)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
